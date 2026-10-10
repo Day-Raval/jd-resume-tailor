@@ -1,0 +1,28 @@
+#virtual environment
+venv/
+env/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+*.egg
+
+# IDEs and editors
+.vscode/
+.idea/
+.vscode/
+
+# Portfolio bank reference
+references/portfolio-bank.md
+
+#Documentation
+Docs/
