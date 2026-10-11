@@ -1,17 +1,15 @@
 #!/usr/bin/env bash
-# Installs the jd-resume-tailor skill into every coding agent found on this machine.
-# Usage:
-#   ./install.sh                 install for agents detected in $HOME
+# Installs the jd-resume-tailor skill into the coding agents on this machine.
+# Run from the repo root.
+#   ./install.sh                 install for agents detected in your home folder
 #   ./install.sh --all           install for every supported agent
 #   ./install.sh claude codex    install for the named agents only
-#   ./install.sh --project       install into ./.agents/skills and ./.claude/skills (current repo)
+#   ./install.sh --project       install into ./.agents/skills and ./.claude/skills
 #   ./install.sh --uninstall     remove from every agent folder
-# Windows-native agents from WSL:  HOME=/mnt/c/Users/<you> ./install.sh
 set -euo pipefail
 
-NAME=jd-resume-tailor
-SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/skills/$NAME"
-[ -f "$SRC/SKILL.md" ] || { echo "error: $SRC/SKILL.md not found; run from the repo root" >&2; exit 1; }
+SRC=skills/jd-resume-tailor
+[ -f "$SRC/SKILL.md" ] || { echo "error: run this from the repo root (skills/jd-resume-tailor/SKILL.md not found)" >&2; exit 1; }
 
 # agent | marker that shows it is installed | skills folder
 AGENTS="
@@ -23,10 +21,9 @@ copilot|$HOME/.copilot|$HOME/.copilot/skills
 "
 
 install_to() {  # $1 = label, $2 = skills folder
-  local dest="$2/$NAME"
+  local dest="$2/jd-resume-tailor" keep=""
   mkdir -p "$2"
   # keep a personal bank someone dropped into references/
-  local keep=""
   [ -f "$dest/references/portfolio-bank.md" ] && keep="$(mktemp)" && cp "$dest/references/portfolio-bank.md" "$keep"
   rm -rf "$dest"
   cp -R "$SRC" "$dest"
@@ -41,14 +38,14 @@ for a in "$@"; do
     --all) mode=all ;;
     --project) mode=project ;;
     --uninstall) mode=uninstall ;;
-    -h|--help) sed -n '2,9p' "$0"; exit 0 ;;
+    -h|--help) sed -n '2,8p' "$0"; exit 0 ;;
     *) mode=named; picked+=("$a") ;;
   esac
 done
 
 if [ "$mode" = project ]; then
-  install_to "project (Codex, Cursor, Gemini, VS Code)" "$PWD/.agents/skills"
-  install_to "project (Claude Code)" "$PWD/.claude/skills"
+  install_to "project (Codex, Cursor, Gemini, VS Code)" .agents/skills
+  install_to "project (Claude Code)" .claude/skills
   exit 0
 fi
 
@@ -58,7 +55,7 @@ while IFS='|' read -r agent marker dir; do
   case "$mode" in
     detect)    [ -d "$marker" ] || continue ;;
     named)     [[ " ${picked[*]} " == *" $agent "* ]] || continue ;;
-    uninstall) [ -d "$dir/$NAME" ] && rm -rf "$dir/$NAME" && echo "  ✖ removed $dir/$NAME"; continue ;;
+    uninstall) [ -d "$dir/jd-resume-tailor" ] && rm -rf "$dir/jd-resume-tailor" && echo "  ✖ removed $dir/jd-resume-tailor"; continue ;;
   esac
   install_to "$agent" "$dir"; count=$((count+1))
 done <<< "$AGENTS"
@@ -66,11 +63,10 @@ done <<< "$AGENTS"
 [ "$mode" = uninstall ] && exit 0
 [ "$count" -eq 0 ] && { echo "No agents detected. Use --all or name one: claude codex gemini cursor copilot"; exit 1; }
 
-BANK="$HOME/.jd-resume-tailor/portfolio-bank.md"
-if [ -f "$BANK" ]; then
-  echo "Portfolio bank found: $BANK"
+if [ -f "$HOME/.jd-resume-tailor/portfolio-bank.md" ]; then
+  echo "Portfolio bank found: $HOME/.jd-resume-tailor/portfolio-bank.md"
 else
   mkdir -p "$HOME/.jd-resume-tailor"
-  echo "No portfolio bank yet. Put yours at $BANK"
+  echo "No portfolio bank yet. Put yours at $HOME/.jd-resume-tailor/portfolio-bank.md"
   echo "(format: $SRC/references/portfolio-bank.sample.md), or ask the skill to build one from your resume."
 fi
