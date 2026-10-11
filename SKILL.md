@@ -8,7 +8,7 @@ description: Tailors a resume to one specific job description using the user's v
 Produce a tailored resume draft in which every claim traces to the portfolio bank.
 
 ## Procedure
-
+0. **Check scope.** If the request is not to tailor a resume (cover letter, LinkedIn, general advice), reply: "This skill only tailors resumes." and stop.
 1. **Parse the JD.** Extract: company, role title, seniority, domain, must-have skills, nice-to-have skills, and any work-authorization or location requirements. Must-haves are skills in "requirements", "must have" or "required" sections; everything else is nice-to-have.
 2. **Check skips.** Read `references/hard-skips.md`. If any rule matches, STOP. Output only: `SKIP: <rule id> - <quoted JD line>`.
 3. **Pick projects.** Read `references/portfolio-bank.md` and `references/domain-matching.md`. Rank every project by how many JD must-haves its Stack and facts cover. Take the top 3; break ties with the domain table.
