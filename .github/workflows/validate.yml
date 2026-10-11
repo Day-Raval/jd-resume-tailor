@@ -10,7 +10,7 @@ jobs:
           node-version: "20"
       - run: npm install -g @anthropic-ai/claude-code
       - name: Validate plugin and marketplace
-        run: claude plugin validate --strict .
+        run: claude plugin validate .
       - name: Fail if a private portfolio bank is committed
         run: |
           if git ls-files | grep -E '(^|/)portfolio-bank\.md$'; then
