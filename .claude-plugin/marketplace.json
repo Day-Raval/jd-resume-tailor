@@ -1,0 +1,14 @@
+{
+  "name": "dayesh-skills",
+  "description": "Agent skills by Dayesh Raval for job search and applied AI work.",
+  "owner": {
+    "name": "Dayesh Raval"
+  },
+  "plugins": [
+    {
+      "name": "jd-resume-tailor",
+      "source": "./",
+      "description": "Provenance-checked resume tailoring: every bullet traces to your portfolio bank."
+    }
+  ]
+}

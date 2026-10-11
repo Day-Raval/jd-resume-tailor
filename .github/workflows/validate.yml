@@ -1,0 +1,23 @@
+name: validate
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm install -g @anthropic-ai/claude-code
+      - name: Validate plugin and marketplace
+        run: claude plugin validate --strict .
+      - name: Fail if a private portfolio bank is committed
+        run: |
+          if git ls-files | grep -E '(^|/)portfolio-bank\.md$'; then
+            echo "Private portfolio-bank.md must not be committed"; exit 1
+          fi
+      - name: Installer puts the skill in all 5 agents
+        run: |
+          H=$(mktemp -d)
+          HOME=$H ./install.sh --all
+          test "$(find $H -name SKILL.md | wc -l)" -eq 5

@@ -1,28 +1,16 @@
-#virtual environment
-venv/
-env/
+# Personal data: never commit
+portfolio-bank.md
+!**/portfolio-bank.sample.md
+**/references/portfolio-bank.md
+*.private.md
+
+# Local tooling
 .venv/
-
-# Python cache
 __pycache__/
-*.py[cod]
-*$py.class
+*.zip
+.DS_Store
+
+# Local only
+write-files.sh
 .python-version
-
-# Distribution / packaging
-build/
-dist/
-*.egg-info/
-pip-wheel-metadata/
-*.egg
-
-# IDEs and editors
-.vscode/
-.idea/
-.vscode/
-
-# Portfolio bank reference
-references/portfolio-bank.md
-
-#Documentation
 Docs/

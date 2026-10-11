@@ -1,148 +1,84 @@
 # JD Resume Tailor
 
-![Codex Skill](https://img.shields.io/badge/Codex-skill-111827?style=for-the-badge)
-![Status](https://img.shields.io/badge/status-work%20in%20progress-f59e0b?style=for-the-badge)
-![Privacy](https://img.shields.io/badge/privacy-local%20portfolio%20bank-10b981?style=for-the-badge)
-![Python](https://img.shields.io/badge/python-%3E%3D3.12-3776ab?style=for-the-badge&logo=python&logoColor=white)
+An agent skill that tailors your resume to one job description **using only facts you have verified**.
 
-> A privacy-first Codex skill for tailoring resumes to job descriptions using only verified, candidate-owned experience.
+Most AI resume tools will happily invent a skill to match a posting. This one can't: every bullet ends with a source tag pointing at an entry in your private portfolio bank, and anything the job asks for that your bank can't back up is reported as a gap instead of being written into the resume.
 
-`jd-resume-tailor` helps turn a job description into a targeted resume draft without inventing projects, metrics, tools, employers, or responsibilities. It is built around a simple rule: the job description defines what matters, and the portfolio bank defines what can truthfully be claimed.
+## What you get
 
-## ✨ Why It Exists
+- Subtitle, summary, skills, experience and 3 project bullets tailored to the JD
+- A source tag on every bullet, e.g. `[P04-F1, P04-F3]`
+- A keyword coverage table: `yes` (evidenced on this resume), `swap Pxx` (evidence is in a project you didn't pick), `listed` (skills list only) or `no`
+- A two-line score, e.g. `Must-haves: Evidenced 9 / 16 · Swap available 1 · Listed only 2 · Missing 4`
+- A hard skip for postings you've ruled out (`references/hard-skips.md`)
 
-Most resume tailoring workflows break in one of two places:
+See `skills/jd-resume-tailor/examples/` for a full fictional run.
 
-- They stay generic and miss the role's real requirements.
-- They overfit the posting and create claims the candidate cannot defend.
+## Install
 
-This skill is designed for the middle path: sharper than a generic resume, stricter than a hallucination-prone rewrite.
+Works in Claude Code, Claude.ai, OpenAI Codex, Gemini CLI, Cursor and GitHub Copilot. The skill uses the open SKILL.md format, so any compatible agent can load it.
 
-## 🧭 How It Works
+**Any agent (recommended)**: clone and run the installer. It detects which agents you have and copies the skill into each one's skills folder.
+```
+git clone https://github.com/Day-Raval/jd-resume-tailor.git
+cd jd-resume-tailor
+./install.sh              # agents detected on this machine
+./install.sh --all        # all five
+./install.sh codex gemini # only these
+./install.sh --project    # into ./.agents/skills and ./.claude/skills of the current repo
+./install.sh --uninstall
+```
+On Windows with WSL, target your Windows home so Windows-native agents see it: `HOME=/mnt/c/Users/<you> ./install.sh`
 
-```text
-Job description
-      ↓
-Requirement extraction
-      ↓
-Portfolio bank matching
-      ↓
-Truth-checked resume tailoring
-      ↓
-Targeted resume draft + rationale
+| Agent | Skills folder the installer uses |
+|---|---|
+| Claude Code | `~/.claude/skills/` |
+| OpenAI Codex | `~/.agents/skills/` |
+| Gemini CLI | `~/.gemini/skills/` |
+| Cursor | `~/.cursor/skills/` |
+| GitHub Copilot | `~/.copilot/skills/` |
+
+**Claude Code plugin** (gets updates with `claude plugin update`):
+```
+claude plugin marketplace add Day-Raval/jd-resume-tailor
+claude plugin install jd-resume-tailor@dayesh-skills
 ```
 
-The intended workflow:
+**Claude.ai**: zip the `skills/jd-resume-tailor/` folder (with your bank copied into its `references/` folder as `portfolio-bank.md`) and upload it under Settings > Capabilities > Skills.
 
-1. Read the job description for domain, responsibilities, tools, keywords, and seniority signals.
-2. Match those needs against verified entries in `references/portfolio-bank.md`.
-3. Rewrite bullets only when the supporting evidence exists.
-4. Skip unsupported claims instead of stretching the candidate's background.
-5. Keep real candidate data out of the public repository.
+**Agents without skill support**: open this repo in the agent. `AGENTS.md` tells it to follow `skills/jd-resume-tailor/SKILL.md`.
 
-## ✅ Current Capabilities
+## Set up your portfolio bank (required)
 
-- 🧩 Defines the `jd-resume-tailor` Codex skill entrypoint in `SKILL.md`.
-- 🗂️ Provides a sample portfolio bank format in `references/portfolio-bank.sample.md`.
-- 🔒 Keeps the real `references/portfolio-bank.md` file ignored by git.
-- 🧱 Includes placeholders for domain matching, style rules, hard skips, sample job descriptions, and sample outputs.
-- 🛠️ Keeps runtime code minimal until a script is actually useful.
+The skill never ships your data. It looks for your bank in this order:
 
-## 🚧 Project Status
+1. `portfolio-bank.md` in your current working directory
+2. `~/.jd-resume-tailor/portfolio-bank.md`
+3. `references/portfolio-bank.md` inside the skill folder (for Claude.ai uploads)
 
-This repository is publishable as a skill scaffold, but the tailoring instructions are still being filled in. Treat it as a polished starting point, not a production-ready resume engine yet.
+Start from `skills/jd-resume-tailor/references/portfolio-bank.sample.md`, or ask the skill to build one from your pasted resume. Rules: one fact per line, real numbers only, and IDs (`E01`, `P03`, `F2`) never change once used.
 
-Planned next steps:
+## Use
 
-- Write the full tailoring procedure in `SKILL.md`.
-- Fill `references/style-guide.md` with resume voice, formatting, and bullet rules.
-- Fill `references/domain-matching.md` with matching heuristics.
-- Fill `references/hard-skips.md` with claims the skill must never make.
-- Add a realistic `examples/sample-jd.md`.
-- Add a complete `examples/sample-output.md`.
-- Replace `main.py` only if automation becomes necessary.
-
-## 📦 Repository Layout
-
-```text
-.
-|-- SKILL.md
-|-- README.md
-|-- examples/
-|   |-- sample-jd.md
-|   `-- sample-output.md
-|-- references/
-|   |-- domain-matching.md
-|   |-- hard-skips.md
-|   |-- portfolio-bank.sample.md
-|   `-- style-guide.md
-|-- main.py
-`-- pyproject.toml
+```
+Tailor my resume for this JD:
+<paste the job description>
 ```
 
-## ⚡ Quick Start
+## Customize
 
-Copy the sample portfolio bank:
+- `references/style-guide.md`: bullet format, banned words, verb pool
+- `references/hard-skips.md`: postings to refuse
+- `references/domain-matching.md`: domains and fallback subtitles
 
-```powershell
-Copy-Item references\portfolio-bank.sample.md references\portfolio-bank.md
-```
+## Privacy
 
-Then replace the fake sample entries with real, verified experience:
+Your portfolio bank stays on your machine. `.gitignore` excludes it, and CI fails if one is committed.
 
-- Projects you actually worked on.
-- Tools and technologies you actually used.
-- Metrics you can defend.
-- Links you are comfortable sharing.
-- Responsibilities that match your actual role.
+## Testing
 
-`references/portfolio-bank.md` is ignored by git so private candidate details stay local by default.
+`evals/trigger-tests.md` has 10 trigger prompts (5 should load the skill, 5 should not) and a quality checklist.
 
-## 🧪 Expected Prompt
+## License
 
-Use the skill when you have a job description and a verified portfolio bank:
-
-```text
-Use jd-resume-tailor to tailor my resume for this job description:
-
-<paste job description>
-```
-
-The finished skill should return:
-
-- A targeted resume draft.
-- Rewritten bullets grounded in verified experience.
-- A short rationale showing which portfolio items were used.
-- A list of requirements intentionally skipped because no supporting evidence existed.
-
-## 🔐 Privacy Model
-
-The public repository should contain reusable instructions, fake samples, and safe fixtures only.
-
-Do not commit:
-
-- Real portfolio bank entries.
-- Private resumes.
-- Job applications in progress.
-- Recruiter or employer contact details.
-- Generated drafts containing personal information.
-
-## 🎯 Good Fit
-
-Use this skill for:
-
-- Candidates tailoring resumes role by role.
-- Career coaches who need evidence-backed rewrites.
-- Agent workflows where resume output must stay truthful.
-- Portfolio-driven resume generation.
-
-Avoid this skill for:
-
-- Inventing missing experience.
-- Creating fake metrics.
-- Rewriting resumes without a verified source of truth.
-- Storing private candidate data in the repository.
-
-## 🪪 License
-
-No license has been selected yet. Until one is added, assume all rights are reserved.
+MIT

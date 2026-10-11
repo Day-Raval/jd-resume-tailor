@@ -1,5 +1,6 @@
 # Style guide
 
+House style. Edit this file to match your own conventions; the skill enforces whatever it says.
 Apply every rule. When two rules conflict, the earlier one wins.
 
 ## 1. Bullet structure (Google XYZ)
@@ -8,6 +9,8 @@ Apply every rule. When two rules conflict, the earlier one wins.
 - Arc: **why → how → impact**. State the problem, the method, then the measurable result.
 - Join clauses with a "which" relative clause, not with "to" as a purpose connector.
 - Lead with a strong past-tense verb. Never reuse an opening verb within one resume.
+- Max 35 words per bullet (2 lines on the page). Use the 2 or 3 strongest facts for THIS JD, not every fact. Tag only the facts you used.
+- The impact clause must carry a number.
 
 Bad: `Built a RAG system to improve answer accuracy using LlamaIndex.`
 (purpose "to", no impact, method buried)
@@ -24,7 +27,7 @@ Good: `Engineered a multi-agent retrieval pipeline on LlamaIndex and ChromaDB, w
 
 ## 3. Varied verbs
 
-Rotate existence and build verbs across projects. Approved pool:
+Approved pool:
 Architected, Engineered, Built, Designed, Developed, Deployed, Shipped, Productionized, Implemented, Trained, Fine-tuned, Orchestrated, Automated, Modeled, Instrumented, Optimized, Launched.
 
 ## 4. Ordering
@@ -35,15 +38,15 @@ Architected, Engineered, Built, Designed, Developed, Deployed, Shipped, Producti
 
 ## 5. Subtitle and summary
 
-- Subtitle: role-led and domain-specific, e.g. `AI/ML Engineer | Agentic Systems & RAG | Healthcare AI`.
+- Subtitle: the JD's role title plus its two strongest must-have themes, e.g. `AI Engineer | GenAI & Production MLOps`. Each theme must be backed by at least one `yes` row. Never name a tool the JD does not mention. Use the domain-matching fallback only when the JD title is generic.
 - Summary opener: use one from "Preferred openers" in the portfolio bank; if none are listed, lead with the role title.
-- Position as a practitioner who bridges business problems and full-stack AI solutions.
+- Position as a practitioner who bridges business problems and full-stack solutions.
 - 2 to 3 lines. No buzzword stacks.
 
 ## Final checklist (run on every bullet)
 
 - [ ] Has a source tag
-- [ ] Follows why → how → impact
+- [ ] Follows why → how → impact, 35 words or fewer
 - [ ] No em dash, no "student", no purpose "to"
 - [ ] Opening verb not used elsewhere
 - [ ] Every number appears verbatim in the bank
