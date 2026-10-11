@@ -3,9 +3,14 @@
   "displayName": "JD Resume Tailor",
   "version": "1.1.0",
   "description": "Tailors a resume to one job description using only facts from your verified portfolio bank. Every bullet carries a source tag, and missing skills are reported as gaps instead of invented.",
-  "author": { "name": "Dayesh Raval" },
+  "author": {
+    "name": "Dayesh Raval"
+  },
   "homepage": "https://github.com/Day-Raval/jd-resume-tailor",
   "repository": "https://github.com/Day-Raval/jd-resume-tailor",
   "license": "MIT",
-  "keywords": ["resume", "job-search", "career", "ats", "provenance"]
+  "keywords": ["resume", "job-search", "career", "ats", "provenance"],
+  "privacyPolicyUrl": "https://github.com/Day-Raval/jd-resume-tailor#privacy",
+  "supportUrl": "https://github.com/Day-Raval/jd-resume-tailor/issues",
+  "documentationUrl": "https://github.com/Day-Raval/jd-resume-tailor#readme"
 }
