@@ -58,6 +58,14 @@ The skill never ships your data. It looks for your bank in this order:
 
 Start from `skills/jd-resume-tailor/references/portfolio-bank.sample.md`, or ask the skill to build one from your pasted resume. Rules: one fact per line, real numbers only, and IDs (`E01`, `P03`, `F2`) never change once used.
 
+## Try it with sample data
+
+No bank yet? Run the skill on the fictional sample to see a full output:
+```
+cp skills/jd-resume-tailor/references/portfolio-bank.sample.md ./portfolio-bank.md
+```
+Then paste the contents of `skills/jd-resume-tailor/examples/sample-jd.md` with "Tailor my resume for this JD". Compare your result with `examples/sample-output.md`. Delete `./portfolio-bank.md` afterwards.
+
 ## Use
 
 ```
@@ -73,7 +81,21 @@ Tailor my resume for this JD:
 
 ## Privacy
 
-Your portfolio bank stays on your machine. `.gitignore` excludes it, and CI fails if one is committed.
+The skill reads one local file: your portfolio bank (`./portfolio-bank.md` or `~/.jd-resume-tailor/portfolio-bank.md`). It writes that file only when you ask it to build a bank from your pasted resume, and only after you confirm. It makes no network calls, has no MCP servers, and sends nothing off your machine; output appears only in your chat. Your bank is excluded by `.gitignore`, and CI fails if one is ever committed.
+
+## Troubleshooting
+
+| Problem | Fix |
+|---|---|
+| Skill doesn't load | Start a new session, use the word "tailor" or "resume" with the JD, or check the skill is in your agent's skills folder (`./install.sh` lists them) |
+| "No portfolio bank found" | Put your bank at `~/.jd-resume-tailor/portfolio-bank.md`, or let the skill build one from your resume |
+| A requirement shows `listed` instead of `yes` | Name the tool in the `Stack:` line or a fact of the project where you used it |
+| Upload to Claude.ai fails | Zip only `skills/jd-resume-tailor/` (SKILL.md at the top level), not the whole repo |
+| Other issues | Open an issue: https://github.com/Day-Raval/jd-resume-tailor/issues |
+
+## Security
+
+See [SECURITY.md](SECURITY.md) to report a vulnerability.
 
 ## Testing
 

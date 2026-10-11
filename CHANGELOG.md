@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1 (2026-10-11)
+- Description matches behavior: 3 projects, JD text (no link fetching).
+- README: sample-data walkthrough, troubleshooting, clearer privacy section.
+- SECURITY.md with a vulnerability reporting channel.
+
 ## 1.1.0 (2026-10-11)
 - Works in Codex, Gemini CLI, Cursor and GitHub Copilot as well as Claude.
 - `install.sh`: detects installed agents and copies the skill into each one's skills folder; `--project`, `--all`, `--uninstall`.

@@ -1,6 +1,6 @@
 ---
 name: jd-resume-tailor
-description: Tailors a resume to one specific job description using the user's verified portfolio bank. Picks the subtitle, summary, skills order and 3 to 4 projects, rewrites bullets in the house style with a source tag on every bullet, and reports keyword coverage and honest gaps. Use when given a job posting, JD text or role link and asked to tailor, target, adapt or customize a resume. Do not use for cover letters, LinkedIn profiles or general resume advice.
+description: Tailors a resume to one specific job description using the user's verified portfolio bank. Picks the subtitle, summary, skills order and 3 projects, rewrites bullets in the house style with a source tag on every bullet, and reports keyword coverage and honest gaps. Use when given job description text and asked to tailor, target, adapt or customize a resume. Do not use for cover letters, LinkedIn profiles or general resume advice.
 ---
 
 # JD Resume Tailor
